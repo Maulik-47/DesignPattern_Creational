@@ -1,0 +1,29 @@
+@{
+    ViewData["Title"] = "Abstract Factory";
+}
+<div class="row">
+    <div class="col-lg-10 mx-auto">
+        <div class="card shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>Abstract Factory Pattern</span>
+                <span class="badge rounded-pill text-bg-secondary">Factory: @ViewBag.Factory</span>
+            </div>
+            <div class="card-body">
+                <p class="text-muted">Provides an interface for creating families of related or dependent objects without specifying their concrete classes. Choose a theme to render consistent UI components.</p>
+                <form method="get" class="mb-3">
+                    <div class="btn-group" role="group">
+                        <a class="btn btn-outline-secondary" asp-action="Index" asp-route-theme="light">Light</a>
+                        <a class="btn btn-outline-secondary" asp-action="Index" asp-route-theme="dark">Dark</a>
+                    </div>
+                </form>
+
+                <div class="p-3 border rounded" style="min-height: 140px;">
+                    <div class="mb-3">
+                        <input class="@ViewBag.TextBoxCss" placeholder="@ViewBag.TextBoxPlaceholder" />
+                    </div>
+                    <button class="@ViewBag.ButtonCss">@ViewBag.ButtonText</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+@{
+    ViewData["Title"] = "Singleton";
+}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>Singleton Pattern</span>
+                <span class="badge text-bg-secondary">Instance: @ViewBag.InstanceId</span>
+            </div>
+            <div class="card-body">
+                <p class="text-muted">Ensures a class has only one instance and provides a global access point to it. The counter below is a singleton service shared across requests.</p>
+                <div class="display-6 mb-3">Value: <span class="fw-bold">@ViewBag.Value</span></div>
+                <form method="post" asp-action="Increment" class="d-inline">
+                    <button class="btn btn-primary">Increment</button>
+                </form>
+                <form method="post" asp-action="Reset" class="d-inline ms-2">
+                    <button class="btn btn-outline-danger">Reset</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

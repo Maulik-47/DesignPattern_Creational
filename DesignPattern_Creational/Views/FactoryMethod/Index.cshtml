@@ -1,0 +1,34 @@
+@{
+    ViewData["Title"] = "Factory Method";
+}
+<div class="row">
+    <div class="col-lg-10 mx-auto">
+        <div class="card shadow-sm">
+            <div class="card-header">Factory Method Pattern</div>
+            <div class="card-body">
+                <p class="text-muted">Defines an interface for creating an object, but lets subclasses decide which class to instantiate. Select a payment type to see different products created.</p>
+                <form method="get" class="row g-2 align-items-end">
+                    <div class="col-sm-6 col-md-4">
+                        <label class="form-label">Payment Type</label>
+                        <select name="type" class="form-select">
+                            <option value="creditcard" selected>Credit Card</option>
+                            <option value="paypal">PayPal</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <label class="form-label">Amount</label>
+                        <input class="form-control" name="amount" value="@ViewBag.Amount" />
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <button class="btn btn-primary">Create Payment</button>
+                    </div>
+                </form>
+                <hr />
+                <div class="alert alert-info">
+                    <div><strong>Selected:</strong> @ViewBag.Selected</div>
+                    <div><strong>Result:</strong> @ViewBag.Result</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

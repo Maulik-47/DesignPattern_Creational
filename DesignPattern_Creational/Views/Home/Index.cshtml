@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Singleton</h5>
+                <p class="card-text">Single shared instance with global access. Demo uses a shared counter updated via UI.</p>
+                <a class="btn btn-primary" asp-controller="Singleton" asp-action="Index">Open Demo</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Factory Method</h5>
+                <p class="card-text">Create products via dedicated creators. Demo switches between payment types.</p>
+                <a class="btn btn-primary" asp-controller="FactoryMethod" asp-action="Index">Open Demo</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Abstract Factory</h5>
+                <p class="card-text">Create families of related UI controls. Demo toggles Light/Dark themes.</p>
+                <a class="btn btn-primary" asp-controller="AbstractFactory" asp-action="Index">Open Demo</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Builder</h5>
+                <p class="card-text">Step-by-step construction of complex objects. Demo builds an order with items and optional gift.</p>
+                <a class="btn btn-primary" asp-controller="Builder" asp-action="Index">Open Demo</a>
+            </div>
+        </div>
+    </div>
+</div>

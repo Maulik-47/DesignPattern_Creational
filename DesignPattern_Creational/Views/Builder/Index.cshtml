@@ -1,0 +1,76 @@
+@model DesignPattern_Creational.Services.Builder.Order
+@{
+    ViewData["Title"] = "Builder";
+}
+<div class="row">
+    <div class="col-lg-10 mx-auto">
+        <div class="card shadow-sm">
+            <div class="card-header">Builder Pattern</div>
+            <div class="card-body">
+                <p class="text-muted">Separates the construction of a complex object from its representation so that the same construction process can create different representations. Build an order step by step.</p>
+
+                <form method="post" asp-action="Build" class="row g-3">
+                    <div class="col-md-5">
+                        <label class="form-label">Product</label>
+                        <input name="product" class="form-control" placeholder="Product name" />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Quantity</label>
+                        <input name="quantity" type="number" value="1" class="form-control" min="1" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Gift Message (optional)</label>
+                        <input name="giftMessage" class="form-control" />
+                    </div>
+                    <div class="col-12">
+                        <button class="btn btn-primary">Build Order</button>
+                    </div>
+                </form>
+
+                @if(!ViewData.ModelState.IsValid)
+                {
+                    <div class="alert alert-danger mt-3">
+                        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                        {
+                            <div>@error.ErrorMessage</div>
+                        }
+                    </div>
+                }
+
+                @if (Model != null && Model.Items.Any())
+                {
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">Order Summary</div>
+                                <div class="card-body">
+                                    <div><strong>Order Id:</strong> @Model.Id</div>
+                                    <div><strong>Created:</strong> @Model.CreatedAt.ToLocalTime()</div>
+                                    @if (!string.IsNullOrWhiteSpace(Model.GiftMessage))
+                                    {
+                                        <div class="mt-2"><strong>Gift Message:</strong> @Model.GiftMessage</div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">Items</div>
+                                <ul class="list-group list-group-flush">
+                                    @foreach (var item in Model.Items)
+                                    {
+                                        <li class="list-group-item d-flex justify-content-between">
+                                            <span>@item.Product</span>
+                                            <span class="badge text-bg-primary">x @item.Quantity</span>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
