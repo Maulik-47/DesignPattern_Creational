@@ -4,11 +4,30 @@
 }
 <div class="row">
     <div class="col-lg-10 mx-auto">
-        <div class="card shadow-sm">
-            <div class="card-header">Builder Pattern</div>
+        <div class="card shadow-sm mb-4">
             <div class="card-body">
-                <p class="text-muted">Separates the construction of a complex object from its representation so that the same construction process can create different representations. Build an order step by step.</p>
-
+                <h4 class="card-title">Builder</h4>
+                <p class="mb-2">Separates how an object is built from the final object, allowing step-by-step construction.</p>
+                <ul>
+                    <li>Build complex objects incrementally.</li>
+                    <li>Reuse the same construction for different representations.</li>
+                    <li>Avoid telescoping constructors and improve readability.</li>
+                </ul>
+                <p class="mb-0"><strong>Example:</strong> Building an order with items and an optional gift message.</p>
+                <pre class="bg-light p-2 rounded mt-2"><code>public class Order { public List&lt;string&gt; Items { get; } = new(); }
+public interface IOrderBuilder { IOrderBuilder AddItem(string n); Order Build(); }
+public class OrderBuilder : IOrderBuilder
+{
+    private readonly Order _o = new();
+    public IOrderBuilder AddItem(string n) { _o.Items.Add(n); return this; }
+    public Order Build() =&gt; _o;
+}</code></pre>
+            </div>
+        </div>
+        <div class="card shadow-sm">
+            <div class="card-header">Live Demo</div>
+            <div class="card-body">
+                <p class="text-muted">Build an order step by step.</p>
                 <form method="post" asp-action="Build" class="row g-3">
                     <div class="col-md-5">
                         <label class="form-label">Product</label>

@@ -3,13 +3,39 @@
 }
 <div class="row">
     <div class="col-lg-10 mx-auto">
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h4 class="card-title">Abstract Factory</h4>
+                <p class="mb-2">Provides an interface to create families of related objects without specifying concrete classes.</p>
+                <ul>
+                    <li>Keep related products consistent (e.g., theme).</li>
+                    <li>Swap entire product families at once (Light/Dark).</li>
+                    <li>Decouple client code from concrete implementations.</li>
+                </ul>
+                <p class="mb-0"><strong>Example:</strong> UI toolkit switching between Light/Dark themes producing matching buttons and inputs.</p>
+                <pre class="bg-light p-2 rounded mt-2"><code>public interface IButton { string Css(); }
+public interface ITextBox { string Css(); }
+public interface IUiFactory { IButton Button(); ITextBox TextBox(); }
+
+public class LightFactory : IUiFactory
+{
+    public IButton Button() =&gt; new LightButton();
+    public ITextBox TextBox() =&gt; new LightTextBox();
+}
+public class DarkFactory : IUiFactory
+{
+    public IButton Button() =&gt; new DarkButton();
+    public ITextBox TextBox() =&gt; new DarkTextBox();
+}</code></pre>
+            </div>
+        </div>
         <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <span>Abstract Factory Pattern</span>
+                <span>Live Demo</span>
                 <span class="badge rounded-pill text-bg-secondary">Factory: @ViewBag.Factory</span>
             </div>
             <div class="card-body">
-                <p class="text-muted">Provides an interface for creating families of related or dependent objects without specifying their concrete classes. Choose a theme to render consistent UI components.</p>
+                <p class="text-muted">Choose a theme to render consistent UI components.</p>
                 <form method="get" class="mb-3">
                     <div class="btn-group" role="group">
                         <a class="btn btn-outline-secondary" asp-action="Index" asp-route-theme="light">Light</a>

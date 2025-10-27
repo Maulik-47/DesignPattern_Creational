@@ -3,10 +3,29 @@
 }
 <div class="row">
     <div class="col-lg-10 mx-auto">
-        <div class="card shadow-sm">
-            <div class="card-header">Factory Method Pattern</div>
+        <div class="card shadow-sm mb-4">
             <div class="card-body">
-                <p class="text-muted">Defines an interface for creating an object, but lets subclasses decide which class to instantiate. Select a payment type to see different products created.</p>
+                <h4 class="card-title">Factory Method</h4>
+                <p class="mb-2">Defines a method for creating objects, letting subclasses decide which class to instantiate.</p>
+                <ul>
+                    <li>Defer object creation to subclasses for flexibility.</li>
+                    <li>Add new product types without changing client code.</li>
+                    <li>Centralize creation logic per product type.</li>
+                </ul>
+                <p class="mb-0"><strong>Example:</strong> Choosing a payment method (Credit Card vs PayPal) at runtime.</p>
+                <pre class="bg-light p-2 rounded mt-2"><code>public interface IPayment { string Pay(decimal amount); }
+public class CreditCard : IPayment { public string Pay(decimal a) =&gt; $"CC {a}"; }
+public class PayPal : IPayment { public string Pay(decimal a) =&gt; $"PP {a}"; }
+
+public abstract class PaymentCreator { public abstract IPayment Create(); }
+public class CreditCardCreator : PaymentCreator { public override IPayment Create() =&gt; new CreditCard(); }
+public class PayPalCreator : PaymentCreator { public override IPayment Create() =&gt; new PayPal(); }</code></pre>
+            </div>
+        </div>
+        <div class="card shadow-sm">
+            <div class="card-header">Live Demo</div>
+            <div class="card-body">
+                <p class="text-muted">Select a payment type to see different products created.</p>
                 <form method="get" class="row g-2 align-items-end">
                     <div class="col-sm-6 col-md-4">
                         <label class="form-label">Payment Type</label>

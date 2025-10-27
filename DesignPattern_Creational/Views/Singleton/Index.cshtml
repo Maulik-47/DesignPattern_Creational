@@ -3,13 +3,31 @@
 }
 <div class="row">
     <div class="col-lg-8 mx-auto">
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h4 class="card-title">Singleton</h4>
+                <p class="mb-2">Ensures only one instance of a class exists and provides a global access point.</p>
+                <ul>
+                    <li>One source of truth for shared data.</li>
+                    <li>Controlled access to a single resource.</li>
+                    <li>Easy global access while preserving encapsulation.</li>
+                </ul>
+                <p class="mb-0"><strong>Example:</strong> Application-wide configuration or logger used everywhere.</p>
+                <pre class="bg-light p-2 rounded mt-2"><code>public sealed class AppConfig
+{
+    private static readonly Lazy&lt;AppConfig&gt; _inst = new(() =&gt; new AppConfig());
+    public static AppConfig Instance =&gt; _inst.Value;
+    private AppConfig() {}
+}</code></pre>
+            </div>
+        </div>
         <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <span>Singleton Pattern</span>
+                <span>Live Demo</span>
                 <span class="badge text-bg-secondary">Instance: @ViewBag.InstanceId</span>
             </div>
             <div class="card-body">
-                <p class="text-muted">Ensures a class has only one instance and provides a global access point to it. The counter below is a singleton service shared across requests.</p>
+                <p class="text-muted">The counter below is a singleton service shared across requests.</p>
                 <div class="display-6 mb-3">Value: <span class="fw-bold">@ViewBag.Value</span></div>
                 <form method="post" asp-action="Increment" class="d-inline">
                     <button class="btn btn-primary">Increment</button>
