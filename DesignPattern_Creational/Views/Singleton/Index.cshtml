@@ -12,13 +12,6 @@
                     <li>Controlled access to a single resource.</li>
                     <li>Easy global access while preserving encapsulation.</li>
                 </ul>
-                <p class="mb-0"><strong>Example:</strong> Application-wide configuration or logger used everywhere.</p>
-                <pre class="bg-light p-2 rounded mt-2"><code>public sealed class AppConfig
-{
-    private static readonly Lazy&lt;AppConfig&gt; _inst = new(() =&gt; new AppConfig());
-    public static AppConfig Instance =&gt; _inst.Value;
-    private AppConfig() {}
-}</code></pre>
             </div>
         </div>
         <div class="card shadow-sm">

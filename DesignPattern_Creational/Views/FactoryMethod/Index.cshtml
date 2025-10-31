@@ -12,14 +12,6 @@
                     <li>Add new product types without changing client code.</li>
                     <li>Centralize creation logic per product type.</li>
                 </ul>
-                <p class="mb-0"><strong>Example:</strong> Choosing a payment method (Credit Card vs PayPal) at runtime.</p>
-                <pre class="bg-light p-2 rounded mt-2"><code>public interface IPayment { string Pay(decimal amount); }
-public class CreditCard : IPayment { public string Pay(decimal a) =&gt; $"CC {a}"; }
-public class PayPal : IPayment { public string Pay(decimal a) =&gt; $"PP {a}"; }
-
-public abstract class PaymentCreator { public abstract IPayment Create(); }
-public class CreditCardCreator : PaymentCreator { public override IPayment Create() =&gt; new CreditCard(); }
-public class PayPalCreator : PaymentCreator { public override IPayment Create() =&gt; new PayPal(); }</code></pre>
             </div>
         </div>
         <div class="card shadow-sm">

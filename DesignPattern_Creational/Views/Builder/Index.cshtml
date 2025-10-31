@@ -13,15 +13,6 @@
                     <li>Reuse the same construction for different representations.</li>
                     <li>Avoid telescoping constructors and improve readability.</li>
                 </ul>
-                <p class="mb-0"><strong>Example:</strong> Building an order with items and an optional gift message.</p>
-                <pre class="bg-light p-2 rounded mt-2"><code>public class Order { public List&lt;string&gt; Items { get; } = new(); }
-public interface IOrderBuilder { IOrderBuilder AddItem(string n); Order Build(); }
-public class OrderBuilder : IOrderBuilder
-{
-    private readonly Order _o = new();
-    public IOrderBuilder AddItem(string n) { _o.Items.Add(n); return this; }
-    public Order Build() =&gt; _o;
-}</code></pre>
             </div>
         </div>
         <div class="card shadow-sm">

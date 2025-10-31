@@ -12,21 +12,6 @@
                     <li>Swap entire product families at once (Light/Dark).</li>
                     <li>Decouple client code from concrete implementations.</li>
                 </ul>
-                <p class="mb-0"><strong>Example:</strong> UI toolkit switching between Light/Dark themes producing matching buttons and inputs.</p>
-                <pre class="bg-light p-2 rounded mt-2"><code>public interface IButton { string Css(); }
-public interface ITextBox { string Css(); }
-public interface IUiFactory { IButton Button(); ITextBox TextBox(); }
-
-public class LightFactory : IUiFactory
-{
-    public IButton Button() =&gt; new LightButton();
-    public ITextBox TextBox() =&gt; new LightTextBox();
-}
-public class DarkFactory : IUiFactory
-{
-    public IButton Button() =&gt; new DarkButton();
-    public ITextBox TextBox() =&gt; new DarkTextBox();
-}</code></pre>
             </div>
         </div>
         <div class="card shadow-sm">
