@@ -15,7 +15,12 @@
             </div>
         </div>
         <div class="card shadow-sm">
-            <div class="card-header">Live Demo</div>
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>Live Demo</span>
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#factoryMethodCodeModal" aria-label="Open code comparison modal">
+                    Code Comparison
+                </button>
+            </div>
             <div class="card-body">
                 <p class="text-muted">Select a payment type to see different products created.</p>
                 <form method="get" class="row g-2 align-items-end">
@@ -43,3 +48,142 @@
         </div>
     </div>
 </div>
+
+<!-- Code Comparison Modal: Fullscreen -->
+<div class="modal fade" id="factoryMethodCodeModal" tabindex="-1" aria-labelledby="factoryMethodCodeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="factoryMethodCodeModalLabel">Factory Method — Code Comparison</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <h6 class="mb-1">Enterprise scenario</h6>
+                    <p class="mb-0 text-muted">A logistics platform integrates with multiple shipping vendors (FedEx, DHL, UPS). Each has its own API for label generation and tracking.</p>
+                </div>
+
+                <div class="row g-3 row-cols-1 row-cols-xl-2">
+                    <!-- Problem Column -->
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>Without Design Pattern</span>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" data-copy-target="fm-code-problem">Copy</button>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-2 text-muted">As new vendors are added, developers keep adding if/else logic — making the service brittle.</p>
+                                <div class="bg-dark text-light rounded p-3 overflow-auto" style="max-height:70vh;">
+<pre class="mb-0"><code id="fm-code-problem" class="language-csharp">public class ShippingService
+{
+    public void CreateShipment(string vendor)
+    {
+        if (vendor == "FedEx")
+        {
+            Console.WriteLine("Creating shipment via FedEx API...");
+        }
+        else if (vendor == "DHL")
+        {
+            Console.WriteLine("Creating shipment via DHL API...");
+        }
+        else if (vendor == "UPS")
+        {
+            Console.WriteLine("Creating shipment via UPS API...");
+        }
+    }
+}
+</code></pre>
+                                </div>
+                                <div class="mt-3">
+                                    <div class="fw-semibold mb-1">Issues</div>
+                                    <ul class="mb-0">
+                                        <li>Any new vendor requires modifying this method (violates Open/Closed Principle).</li>
+                                        <li>No polymorphism, no testability.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Solution Column -->
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>Factory Method</span>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" data-copy-target="fm-code-solution">Copy</button>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-2 text-muted">Use a factory to create vendor-specific providers; add new vendors by adding classes.</p>
+                                <div class="bg-dark text-light rounded p-3 overflow-auto" style="max-height:70vh;">
+<pre class="mb-0"><code id="fm-code-solution" class="language-csharp">public interface IShippingProvider
+{
+    void CreateShipment();
+}
+
+public class FedExProvider : IShippingProvider
+{
+    public void CreateShipment() => Console.WriteLine("FedEx shipment created");
+}
+
+public class DHLProvider : IShippingProvider
+{
+    public void CreateShipment() => Console.WriteLine("DHL shipment created");
+}
+
+public static class ShippingFactory
+{
+    public static IShippingProvider GetProvider(string vendor) => vendor switch
+    {
+        "FedEx" => new FedExProvider(),
+        "DHL" => new DHLProvider(),
+        _ => throw new NotSupportedException()
+    };
+}
+
+// Client
+var provider = ShippingFactory.GetProvider("FedEx");
+provider.CreateShipment();
+</code></pre>
+                                </div>
+                                <div class="mt-3">
+                                    <div class="fw-semibold mb-1">Benefits</div>
+                                    <ul class="mb-0">
+                                        <li>Adding a new vendor = add a new class only.</li>
+                                        <li>Core logic remains untouched.</li>
+                                        <li>Great for plugin-based integrations.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('[data-copy-target]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var target = document.getElementById(this.dataset.copyTarget);
+                if (!target) return;
+                var text = target.innerText;
+                navigator.clipboard.writeText(text).then(() => {
+                    var original = this.innerHTML;
+                    this.innerHTML = 'Copied!';
+                    this.classList.remove('btn-outline-secondary');
+                    this.classList.add('btn-success');
+                    setTimeout(() => {
+                        this.innerHTML = original;
+                        this.classList.remove('btn-success');
+                        this.classList.add('btn-outline-secondary');
+                    }, 1500);
+                });
+            });
+        });
+    });
+</script>

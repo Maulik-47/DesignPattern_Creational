@@ -17,7 +17,12 @@
         <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <span>Live Demo</span>
-                <span class="badge rounded-pill text-bg-secondary">Factory: @ViewBag.Factory</span>
+                <div class="d-flex align-items-center gap-2">
+                    <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#abstractFactoryCodeModal" aria-label="Open code comparison modal">
+                        Code Comparison
+                    </button>
+                    <span class="badge rounded-pill text-bg-secondary">Factory: @ViewBag.Factory</span>
+                </div>
             </div>
             <div class="card-body">
                 <p class="text-muted">Choose a theme to render consistent UI components.</p>
@@ -38,3 +43,143 @@
         </div>
     </div>
 </div>
+
+<!-- Code Comparison Modal: Fullscreen -->
+<div class="modal fade" id="abstractFactoryCodeModal" tabindex="-1" aria-labelledby="abstractFactoryCodeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="abstractFactoryCodeModalLabel">Abstract Factory — Code Comparison</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <h6 class="mb-1">Enterprise scenario</h6>
+                    <p class="mb-0 text-muted">A SaaS app needs to generate UI elements (buttons, dropdowns) for multiple platforms — Web, Mobile, and Desktop — each with its own look &amp; feel.</p>
+                </div>
+
+                <div class="row g-3 row-cols-1 row-cols-xl-2">
+                    <!-- Problem Column -->
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>Without Design Pattern</span>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" data-copy-target="af-code-problem">Copy</button>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-2 text-muted">Developers use long conditional branches to decide what component to render per platform.</p>
+                                <div class="bg-dark text-light rounded p-3 overflow-auto" style="max-height:70vh;">
+<pre class="mb-0"><code id="af-code-problem" class="language-csharp">public class UIControlFactory
+{
+    public void RenderUI(string platform)
+    {
+        if (platform == "Web")
+        {
+            Console.WriteLine("Rendering HTML Button");
+            Console.WriteLine("Rendering HTML Dropdown");
+        }
+        else if (platform == "Mobile")
+        {
+            Console.WriteLine("Rendering Xamarin Button");
+            Console.WriteLine("Rendering Xamarin Dropdown");
+        }
+    }
+}
+</code></pre>
+                                </div>
+                                <div class="mt-3">
+                                    <div class="fw-semibold mb-1">Issues</div>
+                                    <ul class="mb-0">
+                                        <li>Hard to manage when multiple controls are involved.</li>
+                                        <li>Adding a new platform breaks existing logic.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Solution Column -->
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>Abstract Factory</span>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" data-copy-target="af-code-solution">Copy</button>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-2 text-muted">Create families of related UI controls per platform to keep products consistent.</p>
+                                <div class="bg-dark text-light rounded p-3 overflow-auto" style="max-height:70vh;">
+<pre class="mb-0"><code id="af-code-solution" class="language-csharp">public interface IButton { void Render(); }
+public interface IDropdown { void Render(); }
+
+public class WebButton : IButton { public void Render() => Console.WriteLine("Web Button"); }
+public class MobileButton : IButton { public void Render() => Console.WriteLine("Mobile Button"); }
+
+public class WebDropdown : IDropdown { public void Render() => Console.WriteLine("Web Dropdown"); }
+public class MobileDropdown : IDropdown { public void Render() => Console.WriteLine("Mobile Dropdown"); }
+
+public interface IUIFactory
+{
+    IButton CreateButton();
+    IDropdown CreateDropdown();
+}
+
+public class WebUIFactory : IUIFactory
+{
+    public IButton CreateButton() => new WebButton();
+    public IDropdown CreateDropdown() => new WebDropdown();
+}
+
+public class MobileUIFactory : IUIFactory
+{
+    public IButton CreateButton() => new MobileButton();
+    public IDropdown CreateDropdown() => new MobileDropdown();
+}
+
+// Client
+IUIFactory factory = new WebUIFactory();
+factory.CreateButton().Render();
+factory.CreateDropdown().Render();
+</code></pre>
+                                </div>
+                                <div class="mt-3">
+                                    <div class="fw-semibold mb-1">Benefits</div>
+                                    <ul class="mb-0">
+                                        <li>Each platform has a consistent product family.</li>
+                                        <li>New platform (e.g., Desktop) = new factory only.</li>
+                                        <li>Ideal for multi-platform or theming systems.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('[data-copy-target]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var target = document.getElementById(this.dataset.copyTarget);
+                if (!target) return;
+                var text = target.innerText;
+                navigator.clipboard.writeText(text).then(() => {
+                    var original = this.innerHTML;
+                    this.innerHTML = 'Copied!';
+                    this.classList.remove('btn-outline-secondary');
+                    this.classList.add('btn-success');
+                    setTimeout(() => {
+                        this.innerHTML = original;
+                        this.classList.remove('btn-success');
+                        this.classList.add('btn-outline-secondary');
+                    }, 1500);
+                });
+            });
+        });
+    });
+</script>

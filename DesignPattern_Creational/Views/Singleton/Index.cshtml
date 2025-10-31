@@ -17,7 +17,12 @@
         <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <span>Live Demo</span>
-                <span class="badge text-bg-secondary">Instance: @ViewBag.InstanceId</span>
+                <div class="d-flex align-items-center gap-2">
+                    <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#singletonCodeModal" aria-label="Open code comparison modal">
+                        Code Comparison
+                    </button>
+                    <span class="badge text-bg-secondary">Instance: @ViewBag.InstanceId</span>
+                </div>
             </div>
             <div class="card-body">
                 <p class="text-muted">The counter below is a singleton service shared across requests.</p>
@@ -32,3 +37,126 @@
         </div>
     </div>
 </div>
+
+<!-- Code Comparison Modal: Fullscreen -->
+<div class="modal fade" id="singletonCodeModal" tabindex="-1" aria-labelledby="singletonCodeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="singletonCodeModalLabel">Singleton Pattern — Code Comparison</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <h6 class="mb-1">Enterprise scenario</h6>
+                    <p class="mb-0 text-muted">A web app uses a shared configuration manager that loads settings from Azure Key Vault or a configuration DB. You need only one instance across the entire app.</p>
+                </div>
+
+                <div class="row g-3 row-cols-1 row-cols-xl-2">
+                    <!-- Problem Column -->
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>Without Design Pattern</span>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" data-copy-target="code-problem">Copy</button>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-2 text-muted">Each service loads configuration separately — multiple DB calls, inconsistent data.</p>
+                                <div class="bg-dark text-light rounded p-3 overflow-auto" style="max-height:70vh;">
+<pre class="mb-0"><code id="code-problem" class="language-csharp">public class ConfigService
+{
+    public ConfigService()
+    {
+        Console.WriteLine("Loading config from DB...");
+    }
+
+    public string Get(string key) => "SomeValue";
+}
+
+// Each request creates a new instance
+var config1 = new ConfigService();
+var config2 = new ConfigService();
+</code></pre>
+                                </div>
+                                <div class="mt-3">
+                                    <div class="fw-semibold mb-1">Issues</div>
+                                    <ul class="mb-0">
+                                        <li>Redundant loading.</li>
+                                        <li>Race conditions possible.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Solution Column -->
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>Singleton Pattern</span>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" data-copy-target="code-solution">Copy</button>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-2 text-muted">Ensures a single global instance with centralized configuration and caching.</p>
+                                <div class="bg-dark text-light rounded p-3 overflow-auto" style="max-height:70vh;">
+<pre class="mb-0"><code id="code-solution" class="language-csharp">public sealed class ConfigService
+{
+    private static readonly Lazy<ConfigService> _instance = new(() => new ConfigService());
+    public static ConfigService Instance => _instance.Value;
+
+    private ConfigService()
+    {
+        Console.WriteLine("Loading config from DB once...");
+    }
+
+    public string Get(string key) => "SomeValue";
+}
+
+// Client
+var config1 = ConfigService.Instance;
+var config2 = ConfigService.Instance;
+Console.WriteLine(ReferenceEquals(config1, config2));  // True
+</code></pre>
+                                </div>
+                                <div class="mt-3">
+                                    <div class="fw-semibold mb-1">Benefits</div>
+                                    <ul class="mb-0">
+                                        <li>Ensures single global instance.</li>
+                                        <li>Centralized configuration, caching, or logging.</li>
+                                        <li>Common in dependency-heavy systems.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('[data-copy-target]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var target = document.getElementById(this.dataset.copyTarget);
+                if (!target) return;
+                var text = target.innerText;
+                navigator.clipboard.writeText(text).then(() => {
+                    var original = this.innerHTML;
+                    this.innerHTML = 'Copied!';
+                    this.classList.remove('btn-outline-secondary');
+                    this.classList.add('btn-success');
+                    setTimeout(() => {
+                        this.innerHTML = original;
+                        this.classList.remove('btn-success');
+                        this.classList.add('btn-outline-secondary');
+                    }, 1500);
+                });
+            });
+        });
+    });
+</script>
