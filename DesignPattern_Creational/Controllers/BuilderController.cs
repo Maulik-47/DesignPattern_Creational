@@ -9,13 +9,18 @@ public class BuilderController : Controller
     public IActionResult Index() => View(new Order());
 
     [HttpPost]
-    public IActionResult Build(string product, int quantity, string? giftMessage)
+    public IActionResult Build(string product, int quantity, bool useGift = false, string? giftMessage = null)
     {
         try
         {
-            var builder = new OrderBuilder()
-                .AddItem(product, quantity)
-                .WithGift(giftMessage);
+            IOrderBuilder builder = new OrderBuilder()
+                .AddItem(product, quantity);
+
+            if (useGift)
+            {
+                builder = builder.WithGift(giftMessage);
+            }
+
             var order = builder.Build();
             return View("Index", order);
         }

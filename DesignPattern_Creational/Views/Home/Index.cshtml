@@ -4,20 +4,99 @@
 
 <div class="row">
     <div class="col-12">
+        <!-- Design Patterns Definition -->
         <div class="card shadow-sm mb-4">
             <div class="card-body">
-                <h3 class="card-title mb-3">Creational Design Patterns</h3>
-                <p class="card-text">
-                    Design patterns are proven ways to solve common software design problems. They give names to reusable
-                    solutions so teams communicate clearly and build faster with fewer bugs. Creational patterns focus on how
-                    objects are created, making code more flexible, testable, and maintainable.
+                <h3 class="card-title mb-3">Design Patterns</h3>
+                <p class="card-text mb-3">
+                    Design patterns are simple, reusable solutions to common software design problems. They give shared
+                    names and structures to ideas so teams can communicate clearly and build faster with fewer bugs.
                 </p>
-                <h6 class="mt-3">Why they matter</h6>
+                <h6 class="mb-2">Types and why they exist</h6>
                 <ul class="mb-0">
-                    <li>Reduce duplication by standardizing object creation.</li>
-                    <li>Hide construction details to keep code clean and decoupled.</li>
-                    <li>Enable easier unit testing and swapping implementations.</li>
+                    <li><strong>Creational</strong> &mdash; how objects are created (construction and lifecycle).</li>
+                    <li><strong>Structural</strong> &mdash; how objects are composed (relationships and composition).</li>
+                    <li><strong>Behavioral</strong> &mdash; how objects communicate (responsibilities and collaboration).</li>
                 </ul>
+            </div>
+        </div>
+
+        <!-- Patterns Map (Graph) -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h5 class="card-title mb-3">Design Patterns Map</h5>
+
+                <!-- Simple responsive diagram -->
+                <div class="d-flex justify-content-center mb-4">
+                    <svg viewBox="0 0 800 240" class="w-100" style="max-width: 900px; height: auto;">
+                        <!-- Center root -->
+                        <rect x="330" y="10" width="140" height="36" rx="6" fill="#f8f9fa" stroke="#ced4da" />
+                        <text x="400" y="33" text-anchor="middle" font-size="14">Design Patterns</text>
+
+                        <!-- Three branches -->
+                        <line x1="400" y1="46" x2="200" y2="90" stroke="#adb5bd" />
+                        <line x1="400" y1="46" x2="400" y2="90" stroke="#adb5bd" />
+                        <line x1="400" y1="46" x2="600" y2="90" stroke="#adb5bd" />
+
+                        <!-- Nodes -->
+                        <rect x="130" y="90" width="140" height="36" rx="6" fill="#e7f1ff" stroke="#90c2ff" />
+                        <text x="200" y="113" text-anchor="middle" font-size="13">Creational</text>
+
+                        <rect x="330" y="90" width="140" height="36" rx="6" fill="#e8f7ee" stroke="#96d3ae" />
+                        <text x="400" y="113" text-anchor="middle" font-size="13">Structural</text>
+
+                        <rect x="530" y="90" width="140" height="36" rx="6" fill="#fff3cd" stroke="#ffe08a" />
+                        <text x="600" y="113" text-anchor="middle" font-size="13">Behavioral</text>
+                    </svg>
+                </div>
+
+                <!-- Sub-patterns lists -->
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="border rounded p-3 h-100">
+                            <div class="fw-semibold mb-2">Creational</div>
+                            <ul class="mb-0 small">
+                                <li>Abstract Factory</li>
+                                <li>Builder</li>
+                                <li>Factory Method</li>
+                                <li>Prototype</li>
+                                <li>Singleton</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="border rounded p-3 h-100">
+                            <div class="fw-semibold mb-2">Structural</div>
+                            <ul class="mb-0 small">
+                                <li>Adapter</li>
+                                <li>Bridge</li>
+                                <li>Composite</li>
+                                <li>Decorator</li>
+                                <li>Facade</li>
+                                <li>Flyweight</li>
+                                <li>Proxy</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="border rounded p-3 h-100">
+                            <div class="fw-semibold mb-2">Behavioral</div>
+                            <ul class="mb-0 small">
+                                <li>Chain of Responsibility</li>
+                                <li>Command</li>
+                                <li>Interpreter</li>
+                                <li>Iterator</li>
+                                <li>Mediator</li>
+                                <li>Memento</li>
+                                <li>Observer</li>
+                                <li>State</li>
+                                <li>Strategy</li>
+                                <li>Template Method</li>
+                                <li>Visitor</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

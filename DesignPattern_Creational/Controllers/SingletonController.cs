@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DesignPattern_Creational.Controllers;
 
-public class SingletonController(ICounterService counter) : Controller
+public class SingletonController : Controller
 {
-    private readonly ICounterService _counter = counter;
+    private readonly ICounterService _counter = CounterService.Instance;
 
     public IActionResult Index()
     {

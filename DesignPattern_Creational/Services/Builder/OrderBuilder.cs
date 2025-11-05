@@ -7,6 +7,7 @@ public class Order
     public Guid Id { get; init; } = Guid.NewGuid();
     public List<OrderItem> Items { get; } = new();
     public string? GiftMessage { get; set; }
+    public bool IncludeGift { get; set; } // indicates whether gift option was selected
     public DateTime CreatedAt { get; init; } = DateTime.UtcNow;
 }
 
@@ -31,6 +32,7 @@ public class OrderBuilder : IOrderBuilder
 
     public IOrderBuilder WithGift(string? message)
     {
+        _order.IncludeGift = true; // mark gift selected even if no message provided
         _order.GiftMessage = string.IsNullOrWhiteSpace(message) ? null : message;
         return this;
     }

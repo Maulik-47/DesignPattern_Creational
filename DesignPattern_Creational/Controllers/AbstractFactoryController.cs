@@ -8,11 +8,8 @@ public class AbstractFactoryController : Controller
     [HttpGet]
     public IActionResult Index(string? theme)
     {
-        IUiFactory factory = theme?.ToLowerInvariant() switch
-        {
-            "dark" => new DarkUiFactory(),
-            _ => new LightUiFactory()
-        };
+        // Traditional abstract factory selection via a provider
+        IUiFactory factory = UiFactoryProvider.GetFactory(theme);
 
         var button = factory.CreateButton("Submit");
         var textbox = factory.CreateTextBox("Type here...");

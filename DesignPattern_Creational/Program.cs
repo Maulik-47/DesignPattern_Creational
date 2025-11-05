@@ -3,9 +3,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Register Singleton demo service
-builder.Services.AddSingleton<DesignPattern_Creational.Services.Singleton.ICounterService, DesignPattern_Creational.Services.Singleton.CounterService>();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

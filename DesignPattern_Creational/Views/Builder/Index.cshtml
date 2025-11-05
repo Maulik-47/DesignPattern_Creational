@@ -23,25 +23,45 @@
                 </button>
             </div>
             <div class="card-body">
-                <p class="text-muted">Build an order step by step.</p>
+                <p class="text-muted">Build an order step by step. Skip optional steps when you don't need them.</p>
                 <form method="post" asp-action="Build" class="row g-3">
                     <div class="col-md-5">
-                        <label class="form-label">Product</label>
-                        <input name="product" class="form-control" placeholder="Product name" />
+                        <label class="form-label" for="product">Product</label>
+                        <input id="product" name="product" class="form-control" placeholder="Product name" />
                     </div>
                     <div class="col-md-3">
-                        <label class="form-label">Quantity</label>
-                        <input name="quantity" type="number" value="1" class="form-control" min="1" />
+                        <label class="form-label" for="quantity">Quantity</label>
+                        <input id="quantity" name="quantity" type="number" value="1" class="form-control" min="1" />
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label">Gift Message (optional)</label>
-                        <input name="giftMessage" class="form-control" />
+                        <div class="form-check mb-1">
+                            <input class="form-check-input" type="checkbox" id="useGift" name="useGift" value="true" />
+                            <label class="form-check-label" for="useGift">Include Gift</label>
+                        </div>
+                        <label class="form-label" for="giftMessage">Gift Message (optional)</label>
+                        <input id="giftMessage" name="giftMessage" class="form-control" />
+                        <div class="form-text">Uncheck "Include Gift" to skip this optional step.</div>
                     </div>
                     <div class="col-12">
                         <button class="btn btn-primary">Build Order</button>
                     </div>
                 </form>
 
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const chk = document.getElementById('useGift');
+                        const msg = document.getElementById('giftMessage');
+                        function sync() {
+                            const enabled = chk.checked;
+                            msg.disabled = !enabled;
+                            if (!enabled) msg.value = '';
+                        }
+                        chk.addEventListener('change', sync);
+                        sync();
+                    });
+                </script>
+
+                @* Show validation errors *@
                 @if(!ViewData.ModelState.IsValid)
                 {
                     <div class="alert alert-danger mt-3">
@@ -78,6 +98,16 @@
                                         <li class="list-group-item d-flex justify-content-between">
                                             <span>@item.Product</span>
                                             <span class="badge text-bg-primary">x @item.Quantity</span>
+                                        </li>
+                                    }
+                                    @if (Model.IncludeGift)
+                                    {
+                                        <li class="list-group-item">
+                                            <span class="text-success">Gift included</span>
+                                            @if (!string.IsNullOrWhiteSpace(Model.GiftMessage))
+                                            {
+                                                <div class="small text-muted mt-1">Message: @Model.GiftMessage</div>
+                                            }
                                         </li>
                                     }
                                 </ul>
@@ -214,4 +244,4 @@ Console.WriteLine(report);
             });
         });
     });
-</script>
+</script></script>
