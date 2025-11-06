@@ -1,0 +1,81 @@
+@{
+    ViewData["Title"] = "Scenarios";
+}
+<div class="row">
+    <div class="col-12 mx-auto">
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h3 class="card-title mb-2">Guess the Pattern — Real Scenarios</h3>
+                <p class="mb-0 text-muted">Read each scenario. Try to guess the pattern. Click "Reveal Pattern" to check your answer.</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- 1. Centralized Logging System (Singleton) -->
+            <div class="col-12">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <h5 class="card-title mb-2">1) Centralized Logging System</h5>
+                            <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#pattern-1" aria-expanded="false" aria-controls="pattern-1">Reveal Pattern</button>
+                        </div>
+                        <p class="mb-2">Your app runs across multiple modules — Payments, Orders, Notifications, Reports. Every module needs to write logs to the same destination. New Logger instances are created everywhere causing conflicts.</p>
+                        <div class="collapse" id="pattern-1">
+                            <div class="alert alert-primary mt-2 mb-0">Pattern to apply: <strong>Singleton</strong></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Cloud Storage SDK Integration (Abstract Factory) -->
+            <div class="col-12">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <h5 class="card-title mb-2">2) Cloud Storage SDK Integration</h5>
+                            <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#pattern-2" aria-expanded="false" aria-controls="pattern-2">Reveal Pattern</button>
+                        </div>
+                        <p class="mb-2">Integrate with Azure Blob, AWS S3, and Google Cloud Storage. Each platform needs related objects like <em>StorageClient</em>, <em>Bucket</em>, and <em>Uploader</em>. Keep business logic independent of provider.</p>
+                        <div class="collapse" id="pattern-2">
+                            <div class="alert alert-primary mt-2 mb-0">Pattern to apply: <strong>Abstract Factory</strong></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Vehicle Manufacturing System (Factory Method + Builder) -->
+            <div class="col-12">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <h5 class="card-title mb-2">3) Vehicle Manufacturing System</h5>
+                            <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#pattern-3" aria-expanded="false" aria-controls="pattern-3">Reveal Pattern</button>
+                        </div>
+                        <p class="mb-2">System produces Car, Bike, Truck. Each requires different parts (engine, wheels, seats). Customers customize vehicles (e.g., luxury car with leather seats).</p>
+                        <div class="collapse" id="pattern-3">
+                            <div class="alert alert-primary mt-2 mb-0">
+                                Patterns to apply: <strong>Factory Method</strong> (choose vehicle type) + <strong>Builder</strong> (assemble details)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Dynamic Document Parser (Factory Method) -->
+            <div class="col-12">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <h5 class="card-title mb-2">4) Dynamic Document Parser</h5>
+                            <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#pattern-4" aria-expanded="false" aria-controls="pattern-4">Reveal Pattern</button>
+                        </div>
+                        <p class="mb-2">App handles PDF, Excel, XML, JSON. Each needs a different parser. Avoid long if-else chains. Add new formats (CSV, HTML) without touching existing code.</p>
+                        <div class="collapse" id="pattern-4">
+                            <div class="alert alert-primary mt-2 mb-0">Pattern to apply: <strong>Factory Method</strong></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
